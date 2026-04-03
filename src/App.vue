@@ -15,11 +15,16 @@ const sortBy=ref('title');
 
 const filteredMovies=computed(()=>{
   const q=search.value.toLowerCase()
-  let list=movies.value.filter(m=>m.title.toLowerCase().includes(q))
+  let list=movies.value
+  .filter(m=>m.title.toLowerCase().includes(q))
+  .filter(m=>!onlyNew.value||m.year>2010)
+  .filter(m=>!onlyLiked.value||m.liked)
   return list;
-})
-</script>
 
+})
+
+</script>
+  
 <template>
     <div>
       <h1>MOVIE CATALOGUE</h1>
@@ -28,11 +33,11 @@ const filteredMovies=computed(()=>{
       </p>
       <input type="text" placeholder="SEARCH" v-model="search">
       <label>
-<input type=" checkbox"> FEATURED ONLY 
+<input type="checkbox" v-model="onlyLiked"> FEATURED ONLY 
       </label>
 
       <label>
-<input type=" checkbox"> LATER 2010 ONLY 
+<input type="checkbox" v-model="onlyNew"> LATER 2010 ONLY 
       </label>
  
       <select >
@@ -49,12 +54,13 @@ const filteredMovies=computed(()=>{
       <input type="text" placeholder="YEAR">
 
       <button>SUBMIT</button>
-      
+      <p v-if="filteredMovies.length===0">NO RESULT</p>
       <ul>
         <li v-for="movie in movies" :key="movie.id">
 {{movie.title}}
 {{movie.year}}
 {{movie.rating}}
+<button @click="click">{{movie.liked ? "👳🏿‍♂️":"🤶🏿"}}</button>
         </li>
       </ul>
 
