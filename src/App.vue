@@ -1,6 +1,7 @@
 <script setup>
 import {ref, computed} from 'vue'
 import filterform from './components/filterform.vue'
+import addfilm from './components/addfilm.vue'
 const movies=ref([
   {id:1, title:"a",year:2008, rating:6.2, liked:true},
   {id:2, title:"h",year:2079, rating:8.2, liked:true},
@@ -17,7 +18,7 @@ const sortBy=ref('title');
 const error=ref('');;;;;;;;;;;;;;;;;
 const newTitle=ref('')
 const newYear=ref('')
-const newRating=ref('')
+const newRating=ref('');;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 const filteredMovies=computed(()=>{ 
@@ -87,6 +88,17 @@ function resetFilter()
 
     <div>
 
+
+<addfilm
+v-model:title="title"
+v-model:year="year"
+v-model:rating="rating" 
+:error="error"
+@add="addMovie"
+@toggle="toggleLike(movie)"
+@remove="removeMovie(movie.id)"
+/>
+
 <filterform
 v-model:search="search"
 v-model:onlyLiked="onlyLiked"
@@ -96,26 +108,7 @@ v-model:sortBy="sortBy"
 />
 
      
-      <h3>ADD MOVIE</h3>
-
-      <input type="text" placeholder="TITLE">
-      <input type="text" placeholder="RATING">
-      <input type="text" placeholder="YEAR">
-
-      <button @click="addMovie">SUBMIT</button>
-      <p v-if="error">{{error}}</p>
-      <p v-if="filteredMovies.length===0">NO RESULT</p>
-      <ul>
-        <li v-for="movie in filteredMovies" :key="movie.id">
-{{movie.title}}
-{{movie.year}}
-{{movie.rating}}
-<button @click="toggleLike(movie)">{{movie.liked ? "👳🏿‍♂️":"🤶🏿"}}</button>
-<button @click="removeMovie(movie.id)">*</button>
-
-        </li>
-      </ul>
-
+     
       </div> 
 </template>
 
