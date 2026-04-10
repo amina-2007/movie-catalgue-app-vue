@@ -1,5 +1,6 @@
 <script setup>
 import {ref, computed} from 'vue'
+import filterform from './components/filterform.vue'
 const movies=ref([
   {id:1, title:"a",year:2008, rating:6.2, liked:true},
   {id:2, title:"h",year:2079, rating:8.2, liked:true},
@@ -7,25 +8,25 @@ const movies=ref([
   {id:4, title:"g",year:2011, rating:3.2, liked:false},
   {id:5, title:"d",year:2012, rating:9, liked:true}
 ])
-
+              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 const search=ref('');
 const onlyLiked=ref(false);
-const onlyNew=ref(false);
+const onlyNew=ref(false);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 const sortBy=ref('title');
 
-const error=ref('')
+const error=ref('');;;;;;;;;;;;;;;;;
 const newTitle=ref('')
 const newYear=ref('')
 const newRating=ref('')
 
 
-const filteredMovies=computed(()=>{
+const filteredMovies=computed(()=>{ 
   const q=search.value.toLowerCase()
   let list=movies.value
   .filter(m=>m.title.toLowerCase().includes(q))
   .filter(m=>!onlyNew.value||m.year>2010)
   .filter(m=>!onlyLiked.value||m.liked)
-
+;;;;;;;;;;;;;;;;;;;;;
   if (sortBy.value==='title')
   {
     list=[...list].sort((a,b)=>a.title.localeCompare(b.title))
@@ -85,6 +86,15 @@ function resetFilter()
 <template>
 
     <div>
+
+<filterform
+v-model:search="search"
+v-model:onlyLiked="onlyLiked"
+v-model:onlyNew="onlyNew"
+v-model:sortBy="sortBy"
+@reset="resetFilter"
+/>
+
      
       <h3>ADD MOVIE</h3>
 
