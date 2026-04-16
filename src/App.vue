@@ -61,13 +61,13 @@ function addMovie()
     error.value="INPUT TITLE"
     return
   }
-  const id=movies.length===0?1:movies.length+1
-  movies.push({
-    id, 
-    title:newTitle.value,
-    year:newYear.value,
-    rating:newRating.value,
-    liked:false
+ const id = movies.value.length === 0 ? 1 : Math.max(...movies.value.map(m => m.id)) + 1
+  movies.value.push({
+   id, 
+  title: newTitle.value,
+  year: Number(newYear.value) || 0,
+  rating: Number(newRating.value) || 0,
+  liked: false
   })
   newTitle.value=''
   newRating.value=''
@@ -76,7 +76,7 @@ function addMovie()
 
 function resetFilter()
 {
-  sortBy.value='tile'
+  sortBy.value='title'
   search.value=''
   onlyLiked.value=false
   onlyNew.value=false
@@ -89,15 +89,7 @@ function resetFilter()
     <div>
 
 
-<addfilm
-v-model:title="title"
-v-model:year="year"
-v-model:rating="rating" 
-:error="error"
-@add="addMovie"
-@toggle="toggleLike(movie)"
-@remove="removeMovie(movie.id)"
-/>
+
 
 <filterform
 v-model:search="search"
@@ -106,9 +98,29 @@ v-model:onlyNew="onlyNew"
 v-model:sortBy="sortBy"
 @reset="resetFilter"
 />
+<addfilm
+ v-model:title="newTitle"
+  v-model:year="newYear"
+  v-model:rating="newRating"
+  :error="error"
+  :filteredMovies="filteredMovies"
+  @add="addMovie"
+  @toggle="toggleLike"
+  @remove="removeMovie"
+/>
+     
+     <p v-if="filteredMovies.length===0">NO RESULT</p>
+      <ul>
+         
+        <li v-for="movie in filteredMovies" :key="movie.id">
+{{movie.title}}
+{{movie.year}}
+{{movie.rating}}
+<button @click="$emit('toggle', movie)">{{movie.liked ? "👳🏿‍♂️":"🤶🏿"}}</button>
+<button @click="$emit('remove', movie.id)">*</button>
 
-     
-     
+        </li>
+      </ul>
       </div> 
 </template>
 

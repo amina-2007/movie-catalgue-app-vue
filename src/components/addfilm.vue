@@ -11,17 +11,7 @@
 
       <button @click="$emit('add')">SUBMIT</button>
       <p v-if="error">{{error}}</p>
-      <p v-if="filteredMovies.length===0">NO RESULT</p>
-      <ul>
-        <li v-for="movie in filteredMovies" :key="movie.id">
-{{movie.title}}
-{{movie.year}}
-{{movie.rating}}
-<button @click="$emit('toggle, movie')">{{movie.liked ? "👳🏿‍♂️":"🤶🏿"}}</button>
-<button @click="$emit('remove, movie.id')">*</button>
-
-        </li>
-      </ul>
+      
 
     </div>
  </template>
@@ -30,20 +20,20 @@
 import { stringifyQuery } from "vue-router";
 
  defineProps({
- title:String,
-year:Number,
-rating:Number,
-error:String,
-filteredMovies:Array
+ title: String,
+  year: [String, Number],
+  rating: [String, Number],
+  error: String,
+  filteredMovies: Array
  });
 
  defineEmits([
- 'update:title',
- 'update:year',
- 'update:rating',
- 'update:error',
- 'add',
- 'toggle'
+  'update:title',
+  'update:year',
+  'update:rating',
+  'add',
+  'toggle',
+  'remove'
  ]);
  </script>
   
