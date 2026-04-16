@@ -2,13 +2,7 @@
 import {ref, computed} from 'vue'
 import filterform from './components/filterform.vue'
 import addfilm from './components/addfilm.vue'
-const movies=ref([
-  {id:1, title:"a",year:2008, rating:6.2, liked:true},
-  {id:2, title:"h",year:2079, rating:8.2, liked:true},
-  {id:3, title:"f",year:4010, rating:7.2, liked:true},
-  {id:4, title:"g",year:2011, rating:3.2, liked:false},
-  {id:5, title:"d",year:2012, rating:9, liked:true}
-])
+import{movie} from './stores/movie.js'
               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 const search=ref('');
 const onlyLiked=ref(false);
@@ -98,6 +92,7 @@ v-model:onlyNew="onlyNew"
 v-model:sortBy="sortBy"
 @reset="resetFilter"
 />
+<!--
 <addfilm
  v-model:title="newTitle"
   v-model:year="newYear"
@@ -107,7 +102,13 @@ v-model:sortBy="sortBy"
   @add="addMovie"
   @toggle="toggleLike"
   @remove="removeMovie"
-/>
+/>-->
+<router-link to="/movies/new">
+<nav>
+add film
+</nav>
+</router-link>
+
      
      <p v-if="filteredMovies.length===0">NO RESULT</p>
       <ul>
@@ -118,7 +119,9 @@ v-model:sortBy="sortBy"
 {{movie.rating}}
 <button @click="$emit('toggle', movie)">{{movie.liked ? "👳🏿‍♂️":"🤶🏿"}}</button>
 <button @click="$emit('remove', movie.id)">*</button>
-
+<router-link :to="`/movies/${movie.id}/edit`">
+  <button>edit</button>
+</router-link> 
         </li>
       </ul>
       </div> 

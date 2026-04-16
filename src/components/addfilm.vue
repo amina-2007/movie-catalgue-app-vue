@@ -1,6 +1,6 @@
  <template>
     <div>
-        <h3>ADD MOVIE</h3>
+        <h3>ADD MOVIE{{isEdit?'edit film' :'add film'}}</h3>
 
       <input :value="title" 
       @input="$emit('update:title', $event.target.value)" placeholder="TITLE"/>
@@ -9,7 +9,9 @@
       <input :value="year" 
       @input="$emit('update:year', $event.target.value)" placeholder="YEAR"/>
 
-      <button @click="$emit('add')">SUBMIT</button>
+      <button @click="$emit('submit')">{{isEdit?'save' :'add'}}</button>
+      <button @click="$emit('cancel')">cancel</button>
+
       <p v-if="error">{{error}}</p>
       
 
@@ -24,16 +26,17 @@ import { stringifyQuery } from "vue-router";
   year: [String, Number],
   rating: [String, Number],
   error: String,
-  filteredMovies: Array
+  filteredMovies: Array,
+  isEdit:Boolean
  });
 
  defineEmits([
   'update:title',
   'update:year',
   'update:rating',
-  'add',
-  'toggle',
-  'remove'
+  'add',  
+  'submit',
+  'cancel'
  ]);
  </script>
   
