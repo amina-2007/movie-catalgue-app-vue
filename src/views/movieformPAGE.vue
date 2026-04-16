@@ -1,5 +1,14 @@
 <template>
     <div>
-        
+        <addfilm
+ v-model:title="newTitle"
+  v-model:year="newYear"
+  v-model:rating="newRating"
+  :error="error"
+  :filteredMovies="filteredMovies"
+  @add="addMovie"
+  @toggle="toggleLike"
+  @remove="removeMovie"
+/>
     </div>
 </template>
